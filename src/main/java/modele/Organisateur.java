@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Organisateur extends Participant {
-    private List<Evenement> evenements;
+    private List<Evenement> evenementsOrganises = new ArrayList<>();
 
-    public List<Evenement> getEvenements() {
-        return evenements;
+    public List<Evenement> getEvenementsOrganises() {
+        return evenementsOrganises;
     }
 
-    public Organisateur(String id, String nom, String email, List<Evenement> evenements) {
+    public Organisateur(String id, String nom, String email) {
         super(id, nom, email);
-        this.evenements = new ArrayList<>(evenements);
     }
 }

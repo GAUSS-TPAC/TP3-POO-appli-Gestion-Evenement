@@ -6,12 +6,13 @@ import exception.CapaciteMaxAtteinteException;
 import exception.ParticipantDejaInscrit;
 import exception.ParticipantNonTrouvé;
 import service.EvenementObservable;
+import service.NotificationServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value= Conference.class, name="Conference"),
         @JsonSubTypes.Type(value=Concert.class, name="Concert")
@@ -24,6 +25,9 @@ public abstract class  Evenement implements EvenementObservable {
     private  String lieu;
     private  int capaciteMax;
     private  List<Participant> participants;
+
+    private NotificationServiceImpl notif = new NotificationServiceImpl();
+
 
     protected boolean estAnnuler = false;
 
@@ -70,6 +74,7 @@ public abstract class  Evenement implements EvenementObservable {
             throw new ParticipantDejaInscrit("le participant" + p.getNom() + " est deja enregistré!");
         } else {
             participants.add(p);
+            notif.ajouterObservateur(p);
         }
 
     }
@@ -88,7 +93,8 @@ public abstract class  Evenement implements EvenementObservable {
 
     public void annuler(){
         this.estAnnuler= true;
-        notifierObservateurs("l'evenement"+nom +"est annulé.");
+        notif.envoyerNotificationAsync("L'evenement "+ nom + "est annulé");
+
     }
 
 
@@ -104,11 +110,11 @@ public abstract class  Evenement implements EvenementObservable {
         }
     }
 
-
     @Override
-    public void notifierObservateurs(String message){
-        for (Participant p: participants){
+    public void notifierObservateurs(String message) {
+        for (Participant p : participants) {
             p.recevoirNotification(message);
         }
     }
+
 }

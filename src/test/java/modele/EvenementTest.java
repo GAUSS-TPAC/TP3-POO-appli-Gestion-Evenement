@@ -5,10 +5,13 @@ import exception.ParticipantDejaInscrit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 class EvenementTest {
+
 /// ///// inscription Participant
     @Test
     @DisplayName("test ajoutParticipant depassant  capacité max de 1")
@@ -68,4 +71,24 @@ class EvenementTest {
 
     }
 
+    @Test
+    @DisplayName("test notifocation Annulation")
+    public void testNotificationAnnulation(){
+        Evenement event=new Concert("2", "Concert Test", LocalDateTime.now(), "Lyon", 5, "Artiste XYZ", "Pop");
+        Participant p1 = new Participant("p1", "Alice", "alice@example.com");
+
+        event.ajouterParticipant(p1);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps= new PrintStream(baos);
+        PrintStream oldOut= System.out;
+
+        System.setOut(ps);
+
+        event.annuler();
+
+        System.out.flush();
+        System.setOut(oldOut);
+        String output = baos.toString();
+    }
 }

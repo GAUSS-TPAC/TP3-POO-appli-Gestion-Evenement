@@ -47,9 +47,8 @@ class GestionEvenementsTest {
         Evenement event =new Conference("1", "Conférence Test", LocalDateTime.now(), "Paris", 2, "IA");
         gestion.ajouterEvenement(event.getId(), event);
 
-        assertThrows(EvenementDejaExistantException.class, () ->{
-            gestion.ajouterEvenement(event.getId(), event);
-        });
+        assertThrows(EvenementDejaExistantException.class, () ->
+                gestion.ajouterEvenement(event.getId(), event));
     }
 
     @Test
@@ -65,7 +64,7 @@ class GestionEvenementsTest {
         assertTrue(file.exists());
         assertTrue(file.length()>0);
 
-        file.delete();
+        assertTrue(file.delete());
     }
 
     @Test
@@ -83,7 +82,7 @@ class GestionEvenementsTest {
         assertTrue(gestion.getEvenements().containsKey(conf.getId()));
         assertEquals(conf.getNom(), gestion.getEvenements().get(conf.getId()).getNom());
 
-        new File(chemin).delete();
+        assertTrue(new File(chemin).delete());
     }
 
 }

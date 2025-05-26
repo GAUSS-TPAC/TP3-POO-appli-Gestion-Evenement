@@ -16,11 +16,18 @@ public class EvenementSerializer {
 
     public void  sauvegarder(Map<String, Evenement> evenementMap, String chemin) throws IOException {
         ObjectMapper mapperW= new ObjectMapper();
+
         mapperW.registerModule(new JavaTimeModule());
         mapperW.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapperW.enable(SerializationFeature.INDENT_OUTPUT);
-        mapperW.writeValue(new File(chemin), evenementMap);
 
+        mapperW.enable(SerializationFeature.INDENT_OUTPUT);
+
+        File fichier = new File(chemin);
+        if (!fichier.exists()){
+            fichier.createNewFile();
+        }
+        mapperW.writerWithDefaultPrettyPrinter().writeValue(new File(chemin), evenementMap);
+        System.out.println("Evenment sauvegarder dans " + chemin);
     }
     public Map<String, Evenement> charger(String chemin) throws IOException {
         ObjectMapper mapper= new ObjectMapper();
