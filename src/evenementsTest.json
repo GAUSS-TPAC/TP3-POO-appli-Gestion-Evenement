@@ -1,0 +1,12 @@
+{
+  "1" : {
+    "id" : "1",
+    "nom" : "Conférence Test",
+    "date" : "2025-05-26T00:40:44.926343191",
+    "lieu" : "Paris",
+    "capaciteMax" : 2,
+    "participants" : [ ],
+    "theme" : "IA",
+    "intervenants" : null
+  }
+}

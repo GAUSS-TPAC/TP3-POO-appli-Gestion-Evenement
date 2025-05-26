@@ -1,0 +1,16 @@
+{
+  "1" : {
+    "id" : "1",
+    "nom" : "Conférence IA",
+    "date" : "2025-05-25T21:35:38.664783173",
+    "lieu" : "Paris",
+    "capaciteMax" : 100,
+    "participants" : [ {
+      "id" : "p1",
+      "nom" : "Alice",
+      "email" : "alice@example.com"
+    } ],
+    "theme" : "IA",
+    "intervenants" : null
+  }
+}
